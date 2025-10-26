@@ -34,11 +34,11 @@ registerUser = async (req, res) => {
 loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = prisma.user.findUnique({ where: { email } });
-    if (!email) {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
       res.status(400).json({ erorr: "user does not exists" });
     }
-    const isMatch = bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       res.status(400).json({ erorr: "email or password is invaild" });
@@ -63,7 +63,21 @@ loginUser = async (req, res) => {
   }
 };
 
+getUser = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+    });
+    res.status(200).json(user);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Server error during get user", details: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
+  getUser,
 };
