@@ -17,11 +17,12 @@ function registerMessageHandlers(socket, io) {
 
     try {
       // adding message to database
+      console.log("backend recive message", data);
       const newMessage = await prisma.message.create({
         data: {
           text: messageContent,
           senderId: senderId,
-          receiverId: receiverId,
+          receiverId: parseInt(receiverId),
         },
       });
 
