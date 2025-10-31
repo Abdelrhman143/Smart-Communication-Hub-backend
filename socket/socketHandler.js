@@ -12,7 +12,7 @@ function initializeSocket(io) {
     console.log(" A user connected:", socket.id);
 
     registerUserHandlers(socket, io, onlineUsers, brodcastOnlineUsers);
-    registerMessageHandlers(socket, io);
+    registerMessageHandlers(socket, io, onlineUsers);
 
     socket.on("disconnect", () => {
       if (socket.userId) {

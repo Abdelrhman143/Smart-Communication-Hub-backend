@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
-function registerMessageHandlers(socket, io) {
+function registerMessageHandlers(socket, io, onlineUsers) {
   socket.on("send_message", async (data) => {
     const { messageContent, receiverId } = data;
 
@@ -26,8 +26,19 @@ function registerMessageHandlers(socket, io) {
         },
       });
 
-      io.to(receiverId).emit("receive_message", newMessage);
-      io.to(senderId).emit("receive_message", newMessage);
+      const receiverSockets = onlineUsers.get(String(receiverId));
+      if (receiverSockets) {
+        receiverSockets.forEach((socketId) => {
+          io.to(socketId).emit("receive_message", newMessage);
+        });
+      }
+
+      const senderSockets = onlineUsers.get(String(senderId));
+      if (senderSockets) {
+        senderSockets.forEach((socketId) => {
+          io.to(socketId).emit("receive_message", newMessage);
+        });
+      }
       console.log(`Message sent from ${senderId} to ${receiverId}`);
     } catch (error) {
       console.log("Error saving or sending message:", error);
