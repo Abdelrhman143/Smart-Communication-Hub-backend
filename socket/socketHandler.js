@@ -1,13 +1,34 @@
 const { registerMessageHandlers } = require("./handlers/message.handler");
 const { registerUserHandlers } = require("./handlers/user.handler");
 
+const onlineUsers = new Map();
+const brodcastOnlineUsers = (io) => {
+  const onlineUsersId = Array.from(onlineUsers.keys());
+  io.emit("update_online_users", onlineUsersId);
+};
+
 function initializeSocket(io) {
   io.on("connection", (socket) => {
     console.log(" A user connected:", socket.id);
 
-    registerUserHandlers(socket);
-
+    registerUserHandlers(socket, io, onlineUsers, brodcastOnlineUsers);
     registerMessageHandlers(socket, io);
+
+    socket.on("disconnect", () => {
+      if (socket.userId) {
+        const userIdString = String(socket.userId);
+        const userSocketSet = onlineUsers.get(userIdString);
+
+        if (userSocketSet) {
+          userSocketSet.delete(socket.id);
+
+          if (userSocketSet.size === 0) {
+            onlineUsers.delete(userIdString);
+          }
+        }
+      }
+      brodcastOnlineUsers(io);
+    });
   });
 }
 

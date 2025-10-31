@@ -1,9 +1,19 @@
-function registerUserHandlers(socket) {
+function registerUserHandlers(socket, io, onlineUsers, broadcastOnlineUsers) {
   socket.on("send_userId", (userId) => {
+    const userIdString = String(userId);
     socket.join(userId);
-    console.log("the user id coming from front", userId);
     socket.userId = parseInt(userId);
-    console.log("the user id after adding it to socket", userId);
+
+    if (!onlineUsers.has(userIdString)) {
+      onlineUsers.set(userIdString, new Set());
+    }
+    onlineUsers.get(userIdString).add(socket.id);
+    console.log(
+      `User ${userIdString} is now connected. Total sockets: ${
+        onlineUsers.get(userIdString).size
+      } and total online users ${onlineUsers.size}`
+    );
+    broadcastOnlineUsers(io);
   });
   socket.on("disconnect", () => {
     console.log("User disconnected:", socket.id);
