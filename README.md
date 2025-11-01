@@ -202,7 +202,7 @@ To get a token:
 
 The API documentation is available via Swagger UI when the server is running:
 
-**Access Swagger UI**: `http://localhost:5000/api-docs`
+**Access Swagger UI**: `https://smart-communication-hub-backend.onrender.com/api-docs/`
 
 Swagger provides:
 
