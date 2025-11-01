@@ -19,6 +19,18 @@ function registerMessageHandlers(socket, io, onlineUsers) {
       return;
     }
 
+    // Validate receiverId
+    if (!receiverId) {
+      console.log("Error: Receiver ID is required.");
+      return;
+    }
+
+    const parsedReceiverId = parseInt(receiverId);
+    if (isNaN(parsedReceiverId)) {
+      console.log("Error: Invalid receiver ID format.");
+      return;
+    }
+
     try {
       // adding message to database
       console.log("backend recive message", data);
@@ -26,24 +38,21 @@ function registerMessageHandlers(socket, io, onlineUsers) {
         data: {
           text: messageContent,
           senderId: senderId,
-          receiverId: parseInt(receiverId),
+          receiverId: parsedReceiverId,
         },
       });
 
-      const receiverSockets = onlineUsers.get(String(receiverId));
-      if (receiverSockets) {
-        receiverSockets.forEach((socketId) => {
-          io.to(socketId).emit("receive_message", newMessage);
-        });
-      }
+      // Emit message only to receiver's room (not broadcasting to all users)
+      io.to(String(parsedReceiverId)).emit("receive_message", newMessage);
+      console.log(`Message emitted to receiver room: ${parsedReceiverId}`);
 
-      const senderSockets = onlineUsers.get(String(senderId));
-      if (senderSockets) {
-        senderSockets.forEach((socketId) => {
-          io.to(socketId).emit("receive_message", newMessage);
-        });
+      // Emit message to sender's room so sender sees their own message
+      // Only skip if sender and receiver are the same (prevent duplicates in same-user chats)
+      if (senderId !== parsedReceiverId) {
+        io.to(String(senderId)).emit("receive_message", newMessage);
+        console.log(`Message emitted to sender room: ${senderId}`);
       }
-      console.log(`Message sent from ${senderId} to ${receiverId}`);
+      console.log(`Message sent from ${senderId} to ${parsedReceiverId}`);
     } catch (error) {
       console.log("Error saving or sending message:", error);
     }

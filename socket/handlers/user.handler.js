@@ -5,7 +5,8 @@
 function registerUserHandlers(socket, io, onlineUsers, broadcastOnlineUsers) {
   socket.on("send_userId", (userId) => {
     const userIdString = String(userId);
-    socket.join(userId);
+    // Join room using string to ensure consistency with message emission
+    socket.join(userIdString);
     socket.userId = parseInt(userId);
 
     if (!onlineUsers.has(userIdString)) {
