@@ -1,3 +1,8 @@
+/**
+ * Authentication controller
+ * Business logic for user registration, login, and profile retrieval
+ * Handles password hashing, JWT token generation, and database operations
+ */
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");

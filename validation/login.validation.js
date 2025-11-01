@@ -1,3 +1,7 @@
+/**
+ * Login validation schema
+ * Defines validation rules for user login (email and password)
+ */
 const Joi = require("joi");
 
 const loginSchema = Joi.object({

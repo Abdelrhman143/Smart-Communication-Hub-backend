@@ -1,3 +1,7 @@
+/**
+ * Socket user handlers
+ * Handles user connection/disconnection, manages online user tracking
+ */
 function registerUserHandlers(socket, io, onlineUsers, broadcastOnlineUsers) {
   socket.on("send_userId", (userId) => {
     const userIdString = String(userId);

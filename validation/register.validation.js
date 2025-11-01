@@ -1,3 +1,7 @@
+/**
+ * Registration validation schema
+ * Defines validation rules for user registration (name, email, password)
+ */
 const Joi = require("joi");
 
 const registerSchema = Joi.object({

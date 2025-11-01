@@ -1,3 +1,7 @@
+/**
+ * User controller
+ * Business logic for fetching all users except the current authenticated user
+ */
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();

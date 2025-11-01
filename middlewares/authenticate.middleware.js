@@ -1,3 +1,7 @@
+/**
+ * Authentication middleware
+ * Verifies JWT token from Authorization header and attaches user info to request
+ */
 const jwt = require("jsonwebtoken");
 
 const protect = (req, res, next) => {

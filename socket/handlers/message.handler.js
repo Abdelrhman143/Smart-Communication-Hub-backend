@@ -1,3 +1,7 @@
+/**
+ * Socket message handlers
+ * Handles real-time message sending via WebSocket and saves messages to database
+ */
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();

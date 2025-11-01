@@ -1,3 +1,7 @@
+/**
+ * Message controller
+ * Business logic for retrieving chat history between two users
+ */
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();

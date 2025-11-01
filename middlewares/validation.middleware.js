@@ -1,3 +1,7 @@
+/**
+ * Validation middleware
+ * Validates request body against Joi schema before processing
+ */
 const validate = (schema) => {
   return (req, res, next) => {
     const { error } = schema.validate(req.body);

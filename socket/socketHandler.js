@@ -1,3 +1,7 @@
+/**
+ * Socket.IO handler
+ * Initializes Socket.IO connection, manages online users, and registers event handlers
+ */
 const { registerMessageHandlers } = require("./handlers/message.handler");
 const { registerUserHandlers } = require("./handlers/user.handler");
 
