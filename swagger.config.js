@@ -25,7 +25,7 @@ const options = {
         description: "Development server",
       },
       {
-        url: "https://api.example.com",
+        url: "https://smart-communication-hub-backend.onrender.com",
         description: "Production server (example)",
       },
     ],
@@ -203,4 +203,3 @@ const options = {
 const swaggerSpec = swaggerJsdoc(options);
 
 module.exports = swaggerSpec;
-
