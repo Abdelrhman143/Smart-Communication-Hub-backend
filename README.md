@@ -49,6 +49,30 @@ The Smart Communication Hub Backend is a Node.js/Express application that powers
 - **swagger-jsdoc** - Generates Swagger/OpenAPI specification from JSDoc comments
 - **swagger-ui-express** - Serves interactive Swagger documentation
 
+## 🤖 AI Assistance
+
+During the development of this project, **Gemini Pro** was utilized as a learning tool to help understand and implement real-time communication features.
+
+### Where AI Was Used
+
+- **WebSocket & Socket.IO Implementation**: This was the first time working with WebSockets, so Gemini Pro was used to:
+  - Understand WebSocket concepts and real-time bidirectional communication
+  - Learn Socket.IO patterns and best practices
+  - Implement event handlers for real-time messaging
+  - Set up online user tracking and connection management
+  - Understand socket connection lifecycle (connect, disconnect, reconnection)
+
+### Why AI Was Used
+
+The decision to use AI assistance was made to:
+
+- Accelerate learning of unfamiliar technology (WebSockets/Socket.IO)
+- Understand complex real-time communication patterns
+- Get guidance on proper socket event handling and user management
+- Learn best practices for implementing real-time features in Node.js/Express applications
+
+The AI served as an educational resource to bridge knowledge gaps in real-time communication, enabling the successful implementation of instant messaging functionality.
+
 ## 📁 Project Structure
 
 ```
