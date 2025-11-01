@@ -19,7 +19,17 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://smart-communication-hub.netlify.app",
+      "http://localhost:3000", // Add your local frontend URL if you test locally
+    ],
+    credentials: true, // Allow cookies/credentials if needed
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 // Swagger Documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -37,8 +47,12 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: [
+      "https://smart-communication-hub.netlify.app",
+      "http://localhost:3000", // Add your local frontend URL if needed
+    ],
     methods: ["GET", "POST"],
+    credentials: true, // Allow credentials if needed
   },
 });
 
